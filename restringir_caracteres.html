@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- permitir solo números  -->
+    <input type="text" id="texto" onkeypress="return permitir(event, 'N')"/>
+
+    <!-- permitir solo números  -->
+    <input type="text" id="texto" onkeypress="return permitir(event, 'C')"/>
+
+    <!-- permitir solo números o letras  -->
+    <input type="text" id="texto" onkeypress="return permitir(event, 'N_C')"/>
+
+    <script>
+        function permitir(elEvento, permitidos)
+        {
+            // caracteres permitidos
+            var numeros = "0123456789"
+            var caracteres ="abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíoúÁÉÍÓÚÜü";
+            var numeros_caracteres = numeros + caracteres;
+            var teclas_especiales = [8, 37, 39, 46];
+            // 8 = backspace,46 = supr, 37 = flecha izquierda, 39 = flecha derecha
+
+            // Seleccionar a partir del parametro
+
+            switch(permitidos)
+            {
+                case "N":
+                    permitidos = numeros;
+                    break;
+                
+                case 'C':
+                    permitidos = caracteres;
+                    break;
+                case 'N_C':
+                    permitidos = numeros_caracteres;
+                    break;
+            }
+
+            // Obtener tecla pulsada
+            var evento = elEvento || window.event;
+            var codigoCaracter = evento.charCode || evento.keyCode;
+            var caracter = String.fromCharCode(codigoCaracter);
+
+            // Comprobar si la tecla es especial o no
+            var tecla_especial = false;
+            for (var i in teclas_especiales)
+            {
+                if (codigoCaracter == teclas_especiales[i])
+                {
+                    tecla_especial = true;
+                    break;
+                }
+            }
+            // Comprobar si la tecla pulsada es permitida o si es especial
+            return permitidos.indexOf(caracter) != -1 || tecla_especial;
+        }
+
+    </script>
+</body>
+</html>
